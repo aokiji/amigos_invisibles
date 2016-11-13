@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hola <%= @persona.name %></h1>
+    <p>
+      Estas navidades te toca regalar al grande y único <%= @persona_regalada.name %>
+  </p>
+  <% if @avatar.present? %>
+    <p>
+      Recuerda que no puedes negarle unas fantásticas navidades a esta carita 
+    </p>
+    <%= image_tag attachments[@avatar].url %>
+  <% end %>
+  </body>
+</html>

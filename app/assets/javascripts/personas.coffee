@@ -11,8 +11,8 @@ app.factory('personas', ['$http', ($http) ->
       $http.get("/personas/#{id}.json")
     save: (item, avatar) ->
       fd = new FormData
-      fd.append 'persona[avatar]', avatar if avatar?
       fd.append "persona[#{key}]", value for key, value of item
+      fd.append 'persona[avatar]', avatar if avatar?
       $http.patch("/personas/#{item.id}", fd, 
         headers: {'Content-type': undefined}
         transformRequest: angular.identity
@@ -34,8 +34,12 @@ app.controller("personasController", ['$scope', '$http', 'personas', ($scope, $h
 
     $scope.edit = (item) ->
         $scope.editing = null
-        $scope.avatar = null
         personas.get(item.id).success((data) -> $scope.editing = data)
     $scope.save = () ->
-        personas.save($scope.editing, $scope.avatar).success(() -> $scope.editing = null)
+        personas.save($scope.editing, $scope.avatar).success (saved_item) -> 
+          $scope.editing = null
+          for item, index in $scope.items
+            if item.id == saved_item.id
+              $scope.items[index] = angular.copy(saved_item) 
+              break
 ])

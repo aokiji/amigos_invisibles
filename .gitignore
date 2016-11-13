@@ -21,3 +21,5 @@
 
 # files uploaded
 public/uploads
+# generated assets
+public/assets
