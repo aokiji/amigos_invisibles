@@ -20,15 +20,30 @@ class PersonasController < ApplicationController
 
   def shuffle
     @relaciones = {}
-    personas = Persona.all.shuffle
-    personas.each_with_index do |persona, i| 
-      @relaciones[personas[i-1].name] = persona.name
-    end
+    100.times do |try|
+        personas = Persona.all.shuffle
+        personas.each_with_index do |persona, i|          
+          @relaciones[personas[i-1]] = persona
+        end
 
-    @relaciones.each do |persona, quien_es_regalado|
-      PersonaMailer.match(persona, quien_es_regalado).deliver_now
-    end
+        valid = true
+        @relaciones.each do |persona, quien_es_regalado|
+            if persona.restringidos.include?(quien_es_regalado)
+                Rails.logger.info "Rechazando asignacion dado que #{persona.name} no puede relacionarse con #{quien_es_regalado.name}"
+                valid = false
+                break
+            end
+        end
 
-    return head 200
+        if valid
+            @relaciones.each do |persona, quien_es_regalado|
+              PersonaMailer.match_message(persona, quien_es_regalado).deliver_now
+            end
+
+            return head 200
+        end
+    end
+    return head 403
+
   end
 end

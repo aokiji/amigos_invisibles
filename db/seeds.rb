@@ -21,3 +21,14 @@ persona_hash.each do |nombre, email|
       persona.email = email
   end
 end
+
+nico = Persona.find_by_name('Nico')
+marta = Persona.find_by_name('Marta')
+Restriccion.where(persona: nico, restringido: marta).first_or_create
+Restriccion.where(persona: marta, restringido: nico).first_or_create
+
+papa = Persona.find_by_name('Papa')
+mama = Persona.find_by_name('Mama')
+Restriccion.where(persona: papa, restringido: mama).first_or_create
+Restriccion.where(persona: mama, restringido: papa).first_or_create
+
