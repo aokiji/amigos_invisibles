@@ -1,3 +1,113 @@
 // Place all the styles related to the Personas controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "variables";
+
+html, body {
+	height: 100%;
+	text-align: center;
+}
+
+main {
+	display: inline-block;
+	background: $lightred;
+	padding: 2em 4em 4em;
+	margin-top: 2em;
+	border: 1em solid $lightyellow;
+	color: $darkgrey;
+	position: relative;
+}
+#cover {
+	img {
+		width: 20em;
+		display: block;
+		margin: auto;
+		border-radius: 50%;
+	}
+	span{
+		display: block;
+		width: 25em;
+		height: 8em;
+		background: url("label.svg") no-repeat center;
+		position: relative;
+		margin: -4em auto 0;
+	}
+}
+.persona-list {
+	display: inline-block;
+	margin: auto;
+	text-align: left;
+	font-family: $hand;
+	font-size: 2.5em;
+	ul {
+		position: relative;
+		&>* {
+			display: inline-block;
+		}
+		a {
+			font-size: .8em;
+			opacity: 0;
+			color: $lightyellow;
+			position: absolute;
+			top: .2em;
+		}
+		&:hover {
+			color: $white;
+			cursor: default;
+			a {
+				opacity: 1;
+			}
+		}
+	}
+}
+.editing {
+	margin-top: 1em;
+	border-top: 0.125em solid $lightyellow;
+	padding-top: 1em;
+	display: inline-block;
+	& * {
+		display: block;
+		margin-bottom: .5em;
+	}
+	h2 {
+		font-size: 1.2em;
+	}
+	img {
+		width: 8em;
+		height: 8em;
+		object-fit: cover;
+		border-radius: 50%;
+		margin: auto;
+	}
+	label {
+		text-align: left;
+	}
+	input[type=text] {
+		box-sizing: border-box;
+		padding: .15em .5em;
+		width: 100%;
+	}
+}
+#options {
+	position: absolute;
+	font-size: 1.2em;
+	bottom: .75em;
+	right: 1em;
+	& > * {
+		color: $blue;
+		position: relative;
+		margin-left: 1.25em;
+		z-index: 1;
+		&:before {
+			content: "";
+			width: 2em;
+			height: 2em;
+			position: absolute;
+			top: 50%; left: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 50%;
+			background: $lightyellow;
+			z-index: -1;
+		}
+	}
+}

@@ -1,16 +1,29 @@
-<div ng-app="amigosInvisibles" ng-controller="personasController" class="persona-list">
-    <h1>Personas</h1>
-  <div ng-repeat="item in items | orderBy : 'name'" value="{{item.name}}">
-      <a ng-click="edit(item)">{{item.name}}</a>
-  </div>
-  <%= link_to 'Shuffle', personas_shuffle_path, method: :post %>
-  <div class="editing" ng-show="editing">
-      <h2>Edit {{editing.name}}</h2>
-      <label>Avatar:</label>
-      <img ng-src="{{editing.avatar}}" ng-show="editing.avatar"/>
-      <input type="file" file-input="avatar"></input>
-      <label>Email:</label>
-      <input type="text" ng-model="editing.email"></input>
-      <a ng-click="save(new_item)"> Save </a>
-  </div>
-</div>
+<main ng-app="amigosInvisibles" ng-controller="personasController" >
+	<div id="cover">
+		<%= image_tag("img.png", :alt => "/") %>
+		<span></span>
+	</div>
+	<div class="persona-list">
+		<ul ng-repeat="item in items | orderBy : 'name'" value="{{item.name}}">
+			<li>{{item.name}}</li>
+			<li><a ng-click="edit(item)"><%= fa_icon "cog" %></a></li>
+		</ul>
+	</div>
+	<hr />
+	<div class="editing" ng-show="editing">
+		<h2>Editing {{editing.name}}...</h2>
+		<img ng-src="{{editing.avatar}}" ng-show="editing.avatar"/>
+		<div id="avatar">
+			<label>Avatar:</label>
+			<input type="file" file-input="avatar"></input>
+		</div>
+		<div id="email">
+			<label>Email:</label>
+			<input type="text" ng-model="editing.email"></input>
+		</div>
+	</div>
+	<div id="options">
+		<a id="save" ng-show="editing" ng-click="save(new_item)"><%= fa_icon "save" %></a>
+		<%= link_to (fa_icon "random"), personas_shuffle_path, :id => "shuffle", method: :post %>
+	</div>
+</main>
