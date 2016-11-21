@@ -20,7 +20,15 @@
 		<div id="email">
 			<label>Email:</label>
 			<input type="text" ng-model="editing.email"></input>
-		</div>
+        </div>
+        <div id="restrictions">
+            <label>Restrictions:</label>
+            <ul ng-repeat="person in editing.restrictions">
+                <li>{{person.name}} <a ng-click="removeRestriction(person)">Remove</a></li>
+            </ul>
+            <select ng-options="item.name for item in (items | notInArray:editing.restrictions | removePersona:editing)" ng-model="selected" ></select>
+            <a ng-click="addRestriction()">Add</a>
+        </div>
 	</div>
 	<div id="options">
 		<a id="save" ng-show="editing" ng-click="save(new_item)"><%= fa_icon "save" %></a>

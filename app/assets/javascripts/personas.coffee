@@ -11,8 +11,9 @@ app.factory('personas', ['$http', ($http) ->
       $http.get("/personas/#{id}.json")
     save: (item, avatar) ->
       fd = new FormData
-      fd.append "persona[#{key}]", value for key, value of item
+      fd.append "persona[#{key}]", value for key, value of item when key isnt 'restrictions'
       fd.append 'persona[avatar]', avatar if avatar?
+      fd.append 'restrictions', JSON.stringify((persona.id for persona in item.restrictions))
       $http.patch("/personas/#{item.id}", fd, 
         headers: {'Content-type': undefined}
         transformRequest: angular.identity
@@ -26,6 +27,17 @@ app.directive('fileInput', ['$parse', ($parse) ->
       $parse(attrs.fileInput).assign(scope, elm[0].files[0])
       scope.$apply()
 ])
+
+app.filter 'notInArray', () ->
+    (list, arrayFilter) ->
+        return list if not arrayFilter?
+        names = (item.name for item in arrayFilter)
+        (item for item in list when item.name not in names)
+
+app.filter 'removePersona', () ->
+    (list, persona) ->
+        return list if not persona?
+        (item for item in list when item.name isnt persona.name)
 
 app.controller("personasController", ['$scope', '$http', 'personas', ($scope, $http, personas) -> 
     $scope.editing = null
@@ -42,4 +54,10 @@ app.controller("personasController", ['$scope', '$http', 'personas', ($scope, $h
             if item.id == saved_item.id
               $scope.items[index] = angular.copy(saved_item) 
               break
+    $scope.addRestriction = () ->
+        $scope.editing.restrictions.push($scope.selected)
+        $scope.selected = null
+    $scope.removeRestriction = (item) ->
+        $scope.editing.restrictions = (persona for persona in $scope.editing.restrictions when persona.name isnt item.name)
+        
 ])

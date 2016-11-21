@@ -10,6 +10,12 @@ class PersonasController < ApplicationController
   def update
     params.permit!
     @persona = Persona.find(params[:id])
+    restricciones = params[:restrictions]
+    if restricciones.present?
+        restricciones = JSON.parse(restricciones)
+        @persona.restringidos = Persona.where(id: restricciones)
+    end
+
     @persona.update_attributes(params[:persona])
     if (@persona)
       render 'show.json', status: 200
@@ -36,6 +42,7 @@ class PersonasController < ApplicationController
         end
 
         if valid
+            Rails.logger.info "Relaciones aceptadas " + @relaciones.inspect
             @relaciones.each do |persona, quien_es_regalado|
               PersonaMailer.match_message(persona, quien_es_regalado).deliver_now
             end
