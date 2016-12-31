@@ -22,6 +22,8 @@ gem 'angularjs-rails'
 gem 'angular_rails_csrf'
 # file uploader
 gem 'carrierwave'
+# documentation
+gem 'yard'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -40,9 +42,10 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
 end
 
 group :development do

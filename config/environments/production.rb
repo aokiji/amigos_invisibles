@@ -63,12 +63,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              'mail.multiservicioselmorche.es',
-    port:                 25,
+    port:                 587,
     domain:               'multiservicioselmorche.es',
     user_name:            ENV['SMTP_USERNAME'],
     password:             ENV['SMTP_PASSWORD'],
     authentication:       'plain',
-    enable_starttls_auto: false  
+    enable_starttls_auto: false
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
