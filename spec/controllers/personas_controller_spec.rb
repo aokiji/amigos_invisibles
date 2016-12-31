@@ -54,6 +54,8 @@ RSpec.describe PersonasController, type: :controller do
   end
 
   describe '#shuffle' do
+    before(:each) { ActionMailer::Base.deliveries.clear }
+
     context 'sin restricciones' do
       before :each do
         Restriccion.destroy_all
@@ -83,7 +85,7 @@ RSpec.describe PersonasController, type: :controller do
 
         expect(response).to have_http_status(403)
         mails = ActionMailer::Base.deliveries
-        expect(mails.length).to eq(Persona.count)
+        expect(mails).to be_empty
       end
     end
   end

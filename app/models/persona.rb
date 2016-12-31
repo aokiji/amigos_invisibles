@@ -1,6 +1,7 @@
+# Representa a las personas que participan del juego
 class Persona < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 
-  has_many :restricciones, :class_name => 'Restriccion'
-  has_many :restringidos, :through => :restricciones
+  has_many :restricciones, class_name: 'Restriccion'
+  has_many :restringidos, through: :restricciones
 end
