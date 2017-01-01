@@ -1,0 +1,20 @@
+<div class="editing">
+	<h2>Editing {{$ctrl.editing.name}}...</h2>
+	<img ng-src="{{$ctrl.editing.avatar}}" ng-show="$ctrl.editing.avatar"/>
+	<div id="avatar">
+		<label>Avatar:</label>
+		<input type="file" file-input="$ctrl.avatar"></input>
+	</div>
+	<div id="email">
+  	<label>Email:</label>
+  	<input type="text" ng-model="$ctrl.editing.email"></input>
+  </div>
+  <div id="restrictions">
+      <label>Restrictions:</label>
+      <ul ng-repeat="person in $ctrl.editing.restrictions">
+          <li>{{person.name}} <a ng-click="$ctrl.removeRestriction(person)">Remove</a></li>
+      </ul>
+      <select ng-options="item.name for item in ($ctrl.personas | notInArray:$ctrl.editing.restrictions | removePersona:$ctrl.editing)" ng-model="$ctrl.selected" ></select>
+      <a ng-click="$ctrl.addRestriction()">Add</a>
+  </div>
+</div>

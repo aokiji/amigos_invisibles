@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 app = angular.module("amigosInvisibles", []);
 app.factory('personas', ['$http', ($http) ->
-  service = 
+  service =
     items: []
     getAll: () ->
       $http.get('/personas.json').success((data) -> angular.copy(data, service.items))
@@ -14,7 +14,7 @@ app.factory('personas', ['$http', ($http) ->
       fd.append "persona[#{key}]", value for key, value of item when key isnt 'restrictions'
       fd.append 'persona[avatar]', avatar if avatar?
       fd.append 'restrictions', JSON.stringify((persona.id for persona in item.restrictions))
-      $http.patch("/personas/#{item.id}", fd, 
+      $http.patch("/personas/#{item.id}", fd,
         headers: {'Content-type': undefined}
         transformRequest: angular.identity
       )
@@ -28,6 +28,26 @@ app.directive('fileInput', ['$parse', ($parse) ->
       scope.$apply()
 ])
 
+class PersonaEditorController
+  selected: null
+
+  addRestriction: () ->
+    this.editing.restrictions.push(this.selected)
+    this.selected = null
+
+  removeRestriction: (item) ->
+    this.editing.restrictions = (persona for persona in this.editing.restrictions when persona.name isnt item.name)
+
+
+app.component('personaEditor',
+  templateUrl: '/web_components/persona_editor.html',
+  controller: PersonaEditorController,
+  bindings:
+    editing: '='
+    personas: '<'
+    avatar: '='
+)
+
 app.filter 'notInArray', () ->
     (list, arrayFilter) ->
         return list if not arrayFilter?
@@ -39,7 +59,7 @@ app.filter 'removePersona', () ->
         return list if not persona?
         (item for item in list when item.name isnt persona.name)
 
-app.controller("personasController", ['$scope', '$http', 'personas', ($scope, $http, personas) -> 
+app.controller("personasController", ['$scope', '$http', 'personas', ($scope, $http, personas) ->
     $scope.editing = null
     $scope.items = personas.items
     personas.getAll()
@@ -48,16 +68,11 @@ app.controller("personasController", ['$scope', '$http', 'personas', ($scope, $h
         $scope.editing = null
         personas.get(item.id).success((data) -> $scope.editing = data)
     $scope.save = () ->
-        personas.save($scope.editing, $scope.avatar).success (saved_item) -> 
+        personas.save($scope.editing, $scope.avatar).success (saved_item) ->
           $scope.editing = null
           for item, index in $scope.items
             if item.id == saved_item.id
-              $scope.items[index] = angular.copy(saved_item) 
+              $scope.items[index] = angular.copy(saved_item)
               break
-    $scope.addRestriction = () ->
-        $scope.editing.restrictions.push($scope.selected)
-        $scope.selected = null
-    $scope.removeRestriction = (item) ->
-        $scope.editing.restrictions = (persona for persona in $scope.editing.restrictions when persona.name isnt item.name)
-        
+
 ])

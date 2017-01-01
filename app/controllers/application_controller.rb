@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
   def home
     render '/home'
   end
+
+  def web_components
+    render "web_components/#{params[:component]}", layout: false
+  end
 end

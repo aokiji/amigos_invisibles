@@ -10,26 +10,7 @@
 		</ul>
 	</div>
 	<hr />
-	<div class="editing" ng-show="editing">
-		<h2>Editing {{editing.name}}...</h2>
-		<img ng-src="{{editing.avatar}}" ng-show="editing.avatar"/>
-		<div id="avatar">
-			<label>Avatar:</label>
-			<input type="file" file-input="avatar"></input>
-		</div>
-		<div id="email">
-			<label>Email:</label>
-			<input type="text" ng-model="editing.email"></input>
-        </div>
-        <div id="restrictions">
-            <label>Restrictions:</label>
-            <ul ng-repeat="person in editing.restrictions">
-                <li>{{person.name}} <a ng-click="removeRestriction(person)">Remove</a></li>
-            </ul>
-            <select ng-options="item.name for item in (items | notInArray:editing.restrictions | removePersona:editing)" ng-model="selected" ></select>
-            <a ng-click="addRestriction()">Add</a>
-        </div>
-	</div>
+	<persona-editor editing="editing" ng-show="editing" personas="items" avatar="avatar"></persona-editor>
 	<div id="options">
 		<a id="save" ng-show="editing" ng-click="save(new_item)"><%= fa_icon "save" %></a>
 		<%= link_to (fa_icon "random"), personas_shuffle_path, :id => "shuffle", method: :post %>
