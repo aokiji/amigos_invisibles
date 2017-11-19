@@ -1,0 +1,38 @@
+version: '2.1'
+services:
+  app: &app
+    image: amigos_invisibles
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USER: amigos_invisibles
+    ports:
+      - 3000:3000
+    volumes:
+      - ../.:/usr/src/app:z
+  db:
+    image: postgres:9.5
+    environment:
+      POSTGRES_DB: amigos_invisibles_development
+      POSTGRES_USER: amigos_invisibles
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app-migration:
+    image: amigos_invisibles
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USER: amigos_invisibles
+    volumes:
+      - ../.:/usr/src/app:z
+    command: rails db:migrate

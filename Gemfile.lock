@@ -40,7 +40,6 @@ GEM
       tzinfo (~> 1.1)
     angular_rails_csrf (2.0.0)
       railties (>= 3, < 5.1)
-    angularjs-rails (1.5.8)
     arel (7.1.4)
     builder (3.2.2)
     byebug (9.0.6)
@@ -198,7 +197,6 @@ PLATFORMS
 
 DEPENDENCIES
   angular_rails_csrf
-  angularjs-rails
   byebug
   carrierwave
   coffee-rails (~> 4.2)

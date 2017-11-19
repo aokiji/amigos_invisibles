@@ -23,3 +23,7 @@
 public/uploads
 # generated assets
 public/assets
+vendor/assets
+.yardoc
+doc
+.env.production

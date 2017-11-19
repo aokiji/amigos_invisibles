@@ -18,7 +18,6 @@ gem 'coffee-rails', '~> 4.2'
 # font awesome
 gem 'font-awesome-rails'
 # Use angular
-gem 'angularjs-rails'
 gem 'angular_rails_csrf'
 # file uploader
 gem 'carrierwave'

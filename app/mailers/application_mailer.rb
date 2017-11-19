@@ -1,3 +1,3 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'msm@multiservicioselmorche.es'
+  default from: 'tienda@multiservicioselmorche.es'
 end

@@ -6,7 +6,7 @@ app.factory('personas', ['$http', ($http) ->
   service =
     items: []
     getAll: () ->
-      $http.get('/personas.json').success((data) -> angular.copy(data, service.items))
+      $http.get('/personas.json').then((success) -> angular.copy(success.data, service.items))
     get: (id) ->
       $http.get("/personas/#{id}.json")
     save: (item, avatar) ->
@@ -66,13 +66,13 @@ app.controller("personasController", ['$scope', '$http', 'personas', ($scope, $h
 
     $scope.edit = (item) ->
         $scope.editing = null
-        personas.get(item.id).success((data) -> $scope.editing = data)
+        personas.get(item.id).then((success) -> $scope.editing = success.data)
     $scope.save = () ->
-        personas.save($scope.editing, $scope.avatar).success (saved_item) ->
+        personas.save($scope.editing, $scope.avatar).then (success) ->
           $scope.editing = null
           for item, index in $scope.items
             if item.id == saved_item.id
-              $scope.items[index] = angular.copy(saved_item)
+              $scope.items[index] = angular.copy(success.saved_item)
               break
 
 ])

@@ -74,7 +74,7 @@ class PersonasController < ApplicationController
     relaciones = {}
     personas = personas.shuffle
     personas.each_with_index do |persona, i|
-      relaciones[personas[i - 0]] = persona
+      relaciones[personas[i - 1]] = persona
     end
     relaciones
   end
