@@ -13,7 +13,6 @@ persona_hash = {
   'Manolo' => 'manoloj.et@gmail.com',
   'Juan' => 'dlsantosjohn@gmail.com',
   'Maika' => 'maika.dlsantos@gmail.com',
-  'Marta' => 'martarb7187@gmail.com',
 }
 
 persona_hash.each do |nombre, email|
@@ -22,13 +21,13 @@ persona_hash.each do |nombre, email|
   end
 end
 
-nico = Persona.find_by_name('Nico')
-marta = Persona.find_by_name('Marta')
-Restriccion.where(persona: nico, restringido: marta).first_or_create
-Restriccion.where(persona: marta, restringido: nico).first_or_create
 
-papa = Persona.find_by_name('Papa')
-mama = Persona.find_by_name('Mama')
-Restriccion.where(persona: papa, restringido: mama).first_or_create
-Restriccion.where(persona: mama, restringido: papa).first_or_create
+def bidirectional_restriction(person1_name, person2_name)
+  person1 = Persona.find_by_name(person1_name)
+  person2 = Persona.find_by_name(person2_name)
+  Restriccion.where(persona: person1, restringido: person2).first_or_create
+  Restriccion.where(persona: person2, restringido: person1).first_or_create
+end
 
+bidirectional_restriction('Papa', 'Mama')
+bidirectional_restriction('Maika', 'Manolo')
