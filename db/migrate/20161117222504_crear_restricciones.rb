@@ -1,8 +1,8 @@
 class CrearRestricciones < ActiveRecord::Migration[5.0]
   def change
-    create_table :restricciones do |t|
-        t.references :persona
-        t.references :persona, :restringido
+    create_table :restricciones, id: false do |t|
+        t.references :persona, index: false
+        t.references :persona, :restringido, index: false
     end
   end
 end
