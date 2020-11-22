@@ -1,24 +1,22 @@
-# README
+# Setting up
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Create a .env.production file with the following content
 
-Things you may want to cover:
+```
+SMTP_USERNAME=username
+SMTP_PASSWORD=password
+POSTGRES_PASSWORD=pgpass
+AMIGOS_INVISIBLES_DATABASE_PASSWORD=pgpass
+SECRET_KEY_BASE=chorizosecreto
+```
 
-* Ruby version
+Then run
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+$ npm -g install bower
+$ bower install
+$ docker-compose -f docker/docker-compose.yml -f docker/docker-compose.production.yml build
+$ docker-compose -f docker/docker-compose.yml -f docker/docker-compose.production.yml up -d
+$ docker-compose -f docker/docker-compose.yml -f docker/docker-compose.production.yml run app rails assets:precompile
+$ docker-compose -f docker/docker-compose.yml -f docker/docker-compose.production.yml run app rails db:seed
+```
